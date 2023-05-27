@@ -1,0 +1,43 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = "mysql://root:@localhost:3306/wameow"
+}
+
+model User {
+  id          Int           @id @default(autoincrement())
+  username    String        @unique
+  password    String
+  balance     Float         @default(0)
+  Transaction Transaction[]
+  Category    Category[]
+}
+
+model Category {
+  id      Int  @id @default(autoincrement())
+  user_id Int
+  user    User @relation(fields: [user_id], references: [id])
+
+  name           String
+  type           String
+  can_be_deleted Boolean @default(true)
+
+  Transaction Transaction[]
+}
+
+model Transaction {
+  id          Int      @id @default(autoincrement())
+  amount      Float
+  category_id Int
+  category    Category @relation(fields: [category_id], references: [id])
+  user_id     Int
+  user        User     @relation(fields: [user_id], references: [id])
+  description String
+  created_at  DateTime @default(now())
+}

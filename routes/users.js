@@ -17,38 +17,54 @@ router.get("/", async (request, response, next) => {
 });
 
 /**Metodo POST */
-router.post("/", async (request, response) => {
-  const createdUser = await userServices.createNewUser(
-    request,
-  );
-  response.json(createdUser);
+router.post("/", async (request, response, next) => {
+    try {
+        const createdUser = await userServices.createNewUser(
+            request,
+        );
+        response.json(createdUser);
+    } catch(error) {
+        next(error);
+    }
 });
 
 /**Metodo PATCH */
-router.patch("/:id", async (request, response) => {
-  const updateUser = await userServices.updateUsers(
-    request,
-    response
-  );
-  response.json(updateUser);
+router.patch("/:id", async (request, response, next) => {
+    try {
+        const updateUser = await userServices.updateUsers(
+            request,
+            response
+        );
+        response.json(updateUser);
+    } catch(error) {
+        next(error);
+    }
 });
 
 /**Metodo DELETE */
-router.delete("/:id", async (request, response) => {
-  const deletedUser = await userServices.deleteUsers(
-    request,
-    response
-  );
-  response.json(deletedUser);
+router.delete("/:id", async (request, response, next) => {
+    try {
+        const deletedUser = await userServices.deleteUsers(
+            request,
+            response
+        );
+        response.json(deletedUser);
+    } catch(error) {
+        next(error);
+    }
 });
 
 /** GET by OneUser */
-router.get("/login", async (request, response) => {
-  const getOneUser = await userServices.getOneUser(
-    request,
-    response
-  );
-  response.json(getOneUser);
+router.post("/login", async (request, response, next) => {
+    try {
+        const getOneUser = await userServices.getOneUser(
+            request,
+            response
+        );
+        response.json(getOneUser);
+    } catch(error) {
+        next(error);
+    }
 });
 
 /** GET categories by USER */

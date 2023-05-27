@@ -16,31 +16,42 @@ router.get("/", async (request, response, next) => {
 });
 
 /**Metodo POST */
-router.post("/", async (request, response) => {
-  const createTrans = await transactionServices.createNewTrans(
-    request,
-    response
-  );
-  response.json(createTrans);
+router.post("/", async (request, response, next) => {
+  try {
+    const createTrans = await transactionServices.createNewTrans(
+      request,
+      response
+    );
+    response.json(createTrans);
+  } catch (error) {
+    next(error);
+  }
 });
 
 /**Metodo PATCH */
-router.patch("/:id", async (request, response) => {
-  const updateTrans = await transactionServices.updateTrans(
-    request,
-    response
-  );
-  response.json(updateTrans);
+router.patch("/:id", async (request, response, next) => {
+  try {
+    const updateTrans = await transactionServices.updateTrans(
+      request,
+      response
+    );
+    response.json(updateTrans);
+  } catch (error) {
+    next(error);
+  }
 });
 
 /**Metodo DELETE */
-router.delete("/:id", async (request, response) => {
-  const deleteTrans = await transactionServices.deleteTransaction(
-    request,
-    response
-  );
-  response.json(deleteTrans);
+router.delete("/:id", async (request, response, next) => {
+  try {
+    const deleteTrans = await transactionServices.deleteTransaction(
+      request,
+      response
+    );
+    response.json(deleteTrans);
+  } catch (error) {
+    next(error);
+  }
 });
-
 
 module.exports = router;
